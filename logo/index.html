@@ -1,0 +1,84 @@
+<html class="style-purple-1  custom_fonts comps live_website"><head>
+	<!-- This page is running on Unicorn Platform. -->
+	<meta charset="utf-8">
+	<meta property="og:type" content="website">
+		<title>Nexus</title>
+		<meta property="og:title" content="Nexus">
+		<meta name="twitter:title" content="Nexus">
+		<meta name="description" content="Nexus.">
+		<meta property="og:description" content="Nexus">
+		<meta name="twitter:description" content="Nexus">
+		<meta property="og:image" content="https://ucarecdn.com/dc0220a0-5ba6-433f-a8a5-f539578da115/image.png">
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:image" content="https://ucarecdn.com/dc0220a0-5ba6-433f-a8a5-f539578da115/image.png">
+		<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+		<style>
+			.option {
+				width: 50%;
+				margin: 20px auto;
+				padding: 40px;
+				border-bottom: 1px solid rgba(0,0,0,0.1);
+				height: 90px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				position: relative;
+			}
+			.number {
+				font-family: Montserrat;
+				color: #555;
+				position: absolute;
+				font-size: 20px;
+				bottom: 40%;
+				left: 10px;
+			}
+			.wrapper {
+				display: flex;
+				align-items: center;
+			}
+			img {
+				width: 100px;
+			}
+			.large {
+				width: 70px;
+			}
+			.title {
+				font-family: Montserrat;
+				margin-left: 8px;
+				font-size: 50px;
+				color: #555;
+				font-weight: light;
+			}
+			</style>
+</head>
+<body>
+	<div id="container" style="margin-top:100px;">
+	</div>
+	<script>
+		for (let i = 1; i<= 11; i++) {
+			var temp = document.createElement('div');
+			temp.innerHTML = `
+				<div class="option">
+					<div class="number">${i}</div>
+					<div class="wrapper">
+						<img src="logo${i}.svg"><div class="title">NEXUS</div>
+					</div>
+				</div>
+			`;
+			document.getElementById("container").appendChild(temp)
+		}
+		for (let i = 1; i<= 2; i++) {
+			var temp = document.createElement('div');
+			temp.innerHTML = `
+				<div class="option">
+					<div class="number">2.${i}</div>
+					<div class="wrapper">
+						<img src="logo2_${i}.svg"><div class="title">NEXUS</div>
+					</div>
+				</div>
+			`;
+			document.getElementById("container").appendChild(temp)
+		}
+	</script>
+</body>
+</html>
