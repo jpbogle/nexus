@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2201 1090.81"><defs><clipPath id="clip-path" transform="translate(600.5 46.07)"><circle cx="499.73" cy="499.73" r="499.73" style="fill:none"/></clipPath></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><g style="clip-path:url(#clip-path)"><polyline points="1200.5 350.81 1200.5 0.81 2200.5 500.81 2200.5 850.81" style="fill:#231f20;stroke:#231f20;stroke-miterlimit:10"/><polyline points="600.5 470.81 600.5 120.81 1600.5 620.81 1600.5 970.81" style="fill:#231f20;stroke:#231f20;stroke-miterlimit:10"/><polyline points="0.5 590.81 0.5 240.81 1000.5 740.81 1000.5 1090.81" style="fill:#231f20;stroke:#231f20;stroke-miterlimit:10"/></g></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2201 1090.81"><defs><clipPath id="clip-path" transform="translate(600.5 46.07)" >
+<circle cx="499.73" cy="499.73" r="499.73" style="fill:none"/></clipPath></defs>
+<g id="Layer_2" data-name="Layer 2">
+  <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 1100.5 545.405" to="360 1100.5 545.405" dur="1s" repeatCount="indefinite"/>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g style="clip-path:url(#clip-path)">
+      <polyline points="1200.5 350.81 1200.5 0.81 2200.5 500.81 2200.5 850.81" style="fill:#231f20;stroke:#231f20;stroke-miterlimit:10"/>
+      <polyline points="600.5 470.81 600.5 120.81 1600.5 620.81 1600.5 970.81" style="fill:#231f20;stroke:#231f20;stroke-miterlimit:10"/>
+      <polyline points="0.5 590.81 0.5 240.81 1000.5 740.81 1000.5 1090.81" style="fill:#231f20;stroke:#231f20;stroke-miterlimit:10"/>
+    </g>
+  </g>
+</g>
+</svg>

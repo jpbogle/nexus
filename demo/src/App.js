@@ -1,30 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
-import { createChart } from 'lightweight-charts';
+import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 
 const green = "rgb(65, 199, 122)";
 const red = "rgb(242, 59, 105)";
-const border = "5px solid rgba(0, 0, 0, .3)";
+// const border = "5px solid rgba(0, 0, 0, .3)";
+const border = "";
 const gray = "rgba(0,0,0,0.3)";
-const darkBlue = "#131722";
+const darkBlue = "rgb(26, 32, 41)";
 const teal = "rgba(38,198,218, 1)";
 const lightGray = "rgba(255,255,255,0.6)";
 
 const Header = styled.div`
-  height: 40px;
+  height: 60px;
   background: ${darkBlue};
   color: white;
   padding: 10px 2%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   border-bottom: 1px solid ${gray};
 
-  #right {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
 
   #left {
     display: flex;
@@ -34,8 +30,9 @@ const Header = styled.div`
 
   #title {
     font-size: 30px;
-    i {
+    img {
       margin-right: 12px;
+      height: 50px;
     }
   }
 
@@ -81,8 +78,12 @@ const Dashboard = styled.div`
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap-reverse;
+
+  #trading-view {
+    flex-grow: 10;
+  }
+
   #right-panel {
-    margin: 10px;
     min-width: 350px;
     display: flex;
     flex-direction: column;
@@ -90,53 +91,102 @@ const Dashboard = styled.div`
   }
 `;
 
-const ExecutedTrades = styled.div`
-  height: calc(100vh - 80px);
-  width: calc(100vw - 390px);
-  min-width: 340px;
-  margin: 10px 0px 10px 10px;
-`;
-
 const Instrument = styled.div`
   border: ${border};
   background: ${darkBlue};
-  height: 150px;
-  display: flex;
-  margin-bottom: 10px;
-  flex-grow: 1;
 
-  #headshot { 
-    display: inline-block;
-    height: 100%;
 
-    img {
-      height: 100%;
-    }
-  }
-  #info {
+  #ticker-info {
+    height: 200px;
+    display: flex;
     flex-grow: 1;
-    padding: 10px 20px;
-    color: white;
-    #name { 
-      margin-bottom: 2px;
+
+    #headshot { 
+      display: inline-block;
+      height: 100%;
+
+      img {
+        height: 100%;
+      }
     }
-    #ticker { 
-      color: ${lightGray};
-      margin-bottom: 20px;
-    }
-    #stats {
-      text-align: right;
-      .stat {
-        .value {
-          width: 70px;
+    #info {
+      flex-grow: 1;
+      color: white;
+      font-size: 20px;
+
+      #top-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        background: hsla(0,0%,100%,.08);
+        padding: 10px;
+
+        #ticker { 
+          margin-top: 10px;
+          margin-bottom: 10px;
+          font-weight: 600;
+        }
+        #market-price {
+          
+        }
+      }
+      #details {
+        padding: 5px 20px 0px 20px;
+
+        #name { 
+          margin-bottom: 2px;
+        }
+        #subname {
+          font-size: 16px;
           color: ${lightGray};
         }
-        div {
-          display: inline-block;
+        #favorite {
+          margin-top: 20px;
+          border: 1px solid white;
+          border-radius: 9999px;
+          text-align: center;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          width: 150px;
+          justify-content: center;
+
+          svg {
+            height: 20px;
+            width: 20px;
+            vertical-align: middle;
+            margin: 5px;
+          }
         }
       }
     }
+  }
+`;
 
+const Stats = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  text-align: right;
+  padding: 16px 0px 16px 0px;
+  background: hsla(0,0%,100%,.08);
+
+  .stat:nth-child(2),.stat:nth-child(3),.stat:nth-child(4)  {
+    border-left: 1px solid rgb(67, 74, 89);
+  }
+  .stat {
+    flex-grow 1;
+    text-align: center;
+
+    .name {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .value {
+      color: ${lightGray};
+    }
   }
 `;
 
@@ -144,7 +194,7 @@ const OrderBook = styled.div`
   background: ${darkBlue};
   border: ${border};
   color: white;
-  padding: 10px;
+  padding: 20px;
 
   .title {
     text-align: center;
@@ -152,14 +202,15 @@ const OrderBook = styled.div`
   }
 
   .header {
+    color: ${lightGray};
     display: flex;
     justify-content: space-between;
-    border-bottom: .1px solid ${lightGray};
     padding-bottom: 5px;
     margin-bottom: 8px;
   }
 
   #spread {
+
     display: flex;
     justify-content: space-between;
     text-align: right;
@@ -171,9 +222,13 @@ const OrderBook = styled.div`
   }
 
   #buys {
+    font-family: -apple-system,BlinkMacSystemFont;
+
   }
 
   #sells {
+    font-family: -apple-system,BlinkMacSystemFont;
+
     display: flex;
     flex-direction: column-reverse;
   }
@@ -182,9 +237,7 @@ const OrderBook = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 2px;
-    &:nth-child(odd) {
-      background: ${gray};
-    }
+
   }
 
   .buy-order {
@@ -200,7 +253,67 @@ const OrderBook = styled.div`
   }
 `;
 
+const News = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  overflow: scroll;
 
+  .news-item {
+    min-width: 500px;
+    color: white;
+    padding: 10px;
+    background: hsla(0,0%,100%,.08);
+    border-radius: 10px;
+    margin: 10px;
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .date {
+      color: ${lightGray};
+      margin: 10px 0px 10px 0px;
+    }
+
+    .content {
+      font-size: 12px;
+    }
+    .link {
+      color: white;
+      text-decoration: none;
+      margin-top: 20px;
+      border: 1px solid white;
+      border-radius: 9999px;
+      text-align: center;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      width: 150px;
+      justify-content: center;
+    }
+  }
+`;
+
+const instruments = [
+  {
+    name: "Matthew Wolff",
+    ticker: "WOLFF",
+    earningPerShare: 30,
+    totalShares: 1000000,
+    img: './headshots/mwolff.webp',
+  },
+  {
+    name: "Brian 'SMASH' Williams",
+    subname: "Carolina Panthers | Running Back | #22",
+    ticker: "SMASH",
+    earningPerShare: 30,
+    totalShares: 1000000,
+    img: './headshots/smash.png',
+  },
+]
+
+const newsUrl = 'https://api.rss2json.com/v1/api.json?rss_url=https://www.espn.com/espn/rss/nfl/news';
 
 function generateMarketOrder(bias, buys, sells, minQuantity, maxQuantity) {
   const type = Math.random() > bias ? 'SELL' : 'BUY';
@@ -227,7 +340,7 @@ class App extends React.Component {
     super(props);
     const buys = [];
     const sells = [];
-    const marketPrice = 50;
+    const marketPrice = 150;
     for (let i = 0; i <= 1000; i++) {
       const order = generateLimitOrder(marketPrice, 40, 80);
       if (order.type === 'BUY') {
@@ -246,56 +359,30 @@ class App extends React.Component {
       marketPrice: sells[0].price,
       percentMove: 0,
       volume: 100000,
-      instrument: {
-        name: "Matthew Wolff",
-        ticker: "WOLFF",
-        earningPerShare: 30,
-        totalShares: 1000000,
-      }
+      instrument: instruments[1]
     };
-    this.chartRef = React.createRef();
     this.addOrder = this.addOrder.bind(this);
   }
 
   componentDidMount() {
-    setInterval(this.addOrder, 100);
-    this.chart = createChart(this.chartRef.current, {
-      timeScale: {
-        timeVisible: true,
-        secondsVisible: false,
-      },
-      rightPriceScale: {
-        scaleMargins: {
-          top: 0.3,
-          bottom: 0.25,
-        },
-        borderVisible: false,
-      },
-      layout: {
-        backgroundColor: '#131722',
-        textColor: '#d1d4dc',
-      },
-      grid: {
-        vertLines: {
-          color: 'rgba(42, 46, 57, 0)',
-        },
-        horzLines: {
-          color: 'rgba(42, 46, 57, 0.6)',
-        },
-      },
-    });
-    this.chartSeries = this.chart.addAreaSeries({
-      topColor: 'rgba(38,198,218, 0.6)',
-      bottomColor: 'rgba(38,198,218, 0.05)',
-      lineColor: 'rgba(38,198,218, 1)',
-      lineWidth: 2,
-    });
+    setInterval(this.addOrder, 300);
+    this.getNews();
+  }
+
+  getNews() {
+    fetch(newsUrl)
+      .then(res => res.json())
+      .then(newsData => {
+        console.log(newsData);
+        this.setState({
+          newsData,
+        })
+      })
   }
 
   addOrder() {
-    let { buys, sells, volume, marketPrice, bias} = this.state;
+    let { buys, sells, volume, marketPrice, bias } = this.state;
     const order = generateMarketOrder(bias, buys, sells, 5, 15);
-    console.log(order);
     if (order.type === 'BUY') {
       buys.push(order)
       buys.sort((a, b) => (a.price < b.price ? 1 : -1));
@@ -321,10 +408,6 @@ class App extends React.Component {
       } 
     }
     
-    this.chartSeries.update({
-      value: order.price,
-      time: Date.now(),
-    });
     this.setState({
       buys,
       sells,
@@ -335,9 +418,9 @@ class App extends React.Component {
   }
   
   render() {
-    const { buys, sells, bias, marketPrice, percentMove, instrument, volume } = this.state;
-    const topBuys = buys.slice(0, 12);
-    const topSells = sells.slice(0, 12);
+    const { buys, sells, marketPrice, percentMove, instrument, volume, newsData } = this.state;
+    const topBuys = buys.slice(0, 10);
+    const topSells = sells.slice(0, 10);
 
     const buyOrders = topBuys.map(({price, quantity, type}) => (
       <div className="buy-order order">
@@ -358,57 +441,68 @@ class App extends React.Component {
       <>
         <Header>
           <div id="left">
-            <div id="title"><i class="fas fa-spinner" />Nexus</div>
-            <div class="input">
-              <div>Bias</div>
-              <input value={bias} onChange={(e) => this.setState({ bias: e.target.value })}></input>
-            </div>
-          </div>
-          <div id="right">
-            <div id="login">Login</div>
+            <div id="title"><img src="./logo_titled_white.png" alt="NEXUS" /></div>
           </div>
         </Header>
         <Dashboard>
-          <ExecutedTrades ref={this.chartRef} />
+          <div id="trading-view">
+            <TradingViewWidget
+              symbol="NASDAQ:AAPL"
+              theme={Themes.DARK}
+              allow_symbol_change={false}
+              hide_legend={true}
+              autosize
+            />    
+          </div>
           <div id="right-panel">
             <Instrument>
-              <div id="headshot">
-                <img src='./headshots/mwolff.webp' alt="headshot"/>
-              </div>
-              <div id="info">
-                <div id="name">{instrument.name}</div>
-                <div id="ticker">
-                  ${instrument.ticker}
-                  <div id="market-price" style={{ color: percentMove > 0 ? green : red }}>
-                    ${marketPrice.toFixed(2)}
-                    {percentMove > 0 ? (
-                      <i id="arrow" class="fas fa-arrow-up" />
-                    ) : (
-                      <i id="arrow" class="fas fa-arrow-down" />
-                    )}
-                  </div>
+              <div id="ticker-info">
+                <div id="headshot">
+                  <img src={instrument.img} alt="headshot"/>
                 </div>
-                <div id="stats">
-                  <div class="stat">
-                    <div class="name">Vol</div>
-                    <div class="value">{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 5, notation: "compact" }).format(volume)}</div>
+                <div id="info">
+                  <div id="top-row">
+                    <div id="ticker">
+                      ${instrument.ticker}
+                    </div>
+                    <div id="market-price" style={{ color: percentMove > 0 ? green : red }}>
+                      ${marketPrice.toFixed(2)}
+                      {percentMove > 0 ? (
+                        <i id="arrow" class="fas fa-arrow-up" />
+                      ) : (
+                        <i id="arrow" class="fas fa-arrow-down" />
+                      )}
+                    </div>
                   </div>
-                  <div class="stat">
-                    <div class="name">P/E</div>
-                    <div class="value">{(marketPrice / instrument.earningPerShare).toFixed(2)}</div>
-                  </div>
-                  <div class="stat">
-                    <div class="name">Mkt Cap</div>
-                    <div class="value">{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, notation: "compact" }).format(instrument.totalShares * marketPrice)}</div>
+                  <div id="details">
+                    <div id="name">{instrument.name}</div>
+                    <div id="subname">{instrument.subname}</div>
+                    <div id="favorite">
+                        <svg class="Icon_icon__2NnUo inline-block mr-1 h-3 w-3 align-baseline PlayerSummary_favoritedDisabled__3-f5T" role="img" aria-label="Favorite Player Button Star" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8"><path fill="currentColor" fill-rule="evenodd" d="M4 6L1.649 7.236l.449-2.618L.196 2.764l2.628-.382L4 0l1.176 2.382 2.628.382-1.902 1.854.45 2.618z"></path></svg>
+                        <span>FAVORITE</span>
+                    </div>
                   </div>
                 </div>
               </div>
+              <Stats>
+                <div class="stat">
+                  <div class="name">Vol</div>
+                  <div class="value">{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 5, notation: "compact" }).format(volume)}</div>
+                </div>
+                <div class="stat">
+                  <div class="name">P/E</div>
+                  <div class="value">{(marketPrice / instrument.earningPerShare).toFixed(2)}</div>
+                </div>
+                <div class="stat">
+                  <div class="name">Mkt Cap</div>
+                  <div class="value">{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, notation: "compact" }).format(instrument.totalShares * marketPrice)}</div>
+                </div>
+              </Stats>
             </Instrument>
             <OrderBook>
-              <div className="title">Order Book</div>
               <div className="header">
-                <div>Quantity</div>
-                <div>Price</div>
+                <div>Size</div>
+                <div>Price (USD)</div>
               </div>
               <div id="sells">
                 {sellOrders}
@@ -430,7 +524,37 @@ class App extends React.Component {
                 {buyOrders}
               </div>
             </OrderBook>
+            <Stats>
+                <div class="stat">
+                  <div class="name">GP</div>
+                  <div class="value">9</div>
+                </div>
+                <div class="stat">
+                  <div class="name">Rushing Yards</div>
+                  <div class="value">742</div>
+                </div>
+                <div class="stat">
+                  <div class="name">Receiving Yards</div>
+                  <div class="value">313</div>
+                </div>
+                <div class="stat">
+                  <div class="name">TDs</div>
+                  <div class="value">5</div>
+                </div>
+              </Stats>
           </div>
+          <News>
+            {newsData && newsData.items.map(i => (
+              <div class="news-item">
+                <div class="header">
+                  <div class="title">{i.title}</div>
+                  <div class="date">{new Date(i.pubDate).toDateString()}</div>
+                </div>
+                <div class="content">{i.content}</div>
+                <a class="link" href={i.link}>Learn More</a>
+              </div>
+            ))}
+          </News>
         </Dashboard>
       </>
     );
