@@ -10,11 +10,12 @@ const gray = "rgba(0,0,0,0.3)";
 const darkBlue = "rgb(26, 32, 41)";
 const teal = "rgba(38,198,218, 1)";
 const lightGray = "rgba(255,255,255,0.6)";
+const white = "hsla(0,0%,100%,.85)";
 
 const Header = styled.div`
   height: 60px;
   background: ${darkBlue};
-  color: white;
+  color: ${white};
   padding: 10px 2%;
   display: flex;
   align-items: center;
@@ -66,7 +67,7 @@ const Header = styled.div`
       padding: 7px 10px;
       width: 30px;
       background: rgba(255,255,255,0.1);
-      color: white;
+      color: ${white};
       border: 1px solid ${lightGray};
       border-top-right-radius: 4px;
       border-bottom-right-radius: 4px;
@@ -79,11 +80,16 @@ const Dashboard = styled.div`
   justify-content: space-evenly;
   flex-wrap: wrap-reverse;
 
-  #trading-view {
+  .col1 {
     flex-grow: 10;
   }
 
-  #right-panel {
+  .col2 {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .col3 {
     min-width: 350px;
     display: flex;
     flex-direction: column;
@@ -97,21 +103,20 @@ const Instrument = styled.div`
 
 
   #ticker-info {
-    height: 200px;
     display: flex;
-    flex-grow: 1;
 
     #headshot { 
       display: inline-block;
-      height: 100%;
+      width: 180px;
 
       img {
         height: 100%;
+        width: 100%;
+        object-fit: cover;
       }
     }
     #info {
-      flex-grow: 1;
-      color: white;
+      color: ${white};
       font-size: 20px;
 
       #top-row {
@@ -142,7 +147,7 @@ const Instrument = styled.div`
           color: ${lightGray};
         }
         #favorite {
-          margin-top: 20px;
+          margin: 20px 0px 20px 0px;
           border: 1px solid white;
           border-radius: 9999px;
           text-align: center;
@@ -164,11 +169,25 @@ const Instrument = styled.div`
   }
 `;
 
+const Bio = styled.div`
+  padding: 20px;
+  color: ${lightGray};
+  overflow: scroll;
+  display: flex;
+  justify-content: center;
+  
+  .content {
+    width: 450px;
+    line-height: 1.6;
+  }
+  
+`;
+
 const Stats = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: white;
+  color: ${white};
   text-align: right;
   padding: 16px 0px 16px 0px;
   background: hsla(0,0%,100%,.08);
@@ -191,10 +210,11 @@ const Stats = styled.div`
 `;
 
 const OrderBook = styled.div`
+  color: ${white};
   background: ${darkBlue};
   border: ${border};
-  color: white;
   padding: 20px;
+  margin: 0px 10px 10px 10px;
 
   .title {
     text-align: center;
@@ -215,6 +235,8 @@ const OrderBook = styled.div`
     justify-content: space-between;
     text-align: right;
     padding: 10px;
+    font-family: -apple-system,BlinkMacSystemFont;
+    font-size: 16px;
 
     #arrow { 
       margin-left: 5px;
@@ -223,12 +245,15 @@ const OrderBook = styled.div`
 
   #buys {
     font-family: -apple-system,BlinkMacSystemFont;
-
+    font-wieght: 200;
+    font-size: 14px;
   }
 
   #sells {
     font-family: -apple-system,BlinkMacSystemFont;
-
+    font-wieght: 200;
+    font-size: 14px;
+    
     display: flex;
     flex-direction: column-reverse;
   }
@@ -253,6 +278,30 @@ const OrderBook = styled.div`
   }
 `;
 
+const Recents = styled.div`
+  height: 200px;
+  overflow: scroll;
+  margin: 0px 10px;
+  color: ${white};
+  background: ${darkBlue};
+  border: ${border};
+  padding: 20px;
+
+  .header {
+    color: ${lightGray};
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    margin-bottom: 8px;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+`;
+
 const News = styled.div`
   width: 100%;
   display: flex;
@@ -260,12 +309,17 @@ const News = styled.div`
   overflow: scroll;
 
   .news-item {
-    min-width: 500px;
-    color: white;
-    padding: 10px;
+    border: 1px solid #434651;
+    width: 20%;
+    min-width: 300px;
+    color: ${white};
+    padding: 20px;
     background: hsla(0,0%,100%,.08);
     border-radius: 10px;
-    margin: 10px;
+    margin: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     .title {
       font-size: 16px;
@@ -279,10 +333,16 @@ const News = styled.div`
     .content {
       font-size: 12px;
     }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
     .link {
-      color: white;
+      color: ${white};
       text-decoration: none;
-      margin-top: 20px;
+      margin-top: 10px;
+      padding: 5px;
       border: 1px solid white;
       border-radius: 9999px;
       text-align: center;
@@ -291,6 +351,11 @@ const News = styled.div`
       align-items: center;
       width: 150px;
       justify-content: center;
+    }
+    .source {
+      img {
+        max-height: 10px;
+      }
     }
   }
 `;
@@ -359,13 +424,14 @@ class App extends React.Component {
       marketPrice: sells[0].price,
       percentMove: 0,
       volume: 100000,
-      instrument: instruments[1]
+      instrument: instruments[1],
+      recentOrders: [],
     };
     this.addOrder = this.addOrder.bind(this);
   }
 
   componentDidMount() {
-    setInterval(this.addOrder, 300);
+    setInterval(this.addOrder, 1000);
     this.getNews();
   }
 
@@ -381,7 +447,7 @@ class App extends React.Component {
   }
 
   addOrder() {
-    let { buys, sells, volume, marketPrice, bias } = this.state;
+    let { buys, sells, volume, marketPrice, bias, recentOrders } = this.state;
     const order = generateMarketOrder(bias, buys, sells, 5, 15);
     if (order.type === 'BUY') {
       buys.push(order)
@@ -411,6 +477,7 @@ class App extends React.Component {
     this.setState({
       buys,
       sells,
+      recentOrders: [order, ...recentOrders.slice(0, 30)],
       marketPrice: order.price,
       percentMove: (order.price - marketPrice) / marketPrice,
       volume: volume + quantityTraded,
@@ -418,13 +485,15 @@ class App extends React.Component {
   }
   
   render() {
-    const { buys, sells, marketPrice, percentMove, instrument, volume, newsData } = this.state;
+    const { buys, sells, recentOrders, marketPrice, percentMove, instrument, volume, newsData } = this.state;
     const topBuys = buys.slice(0, 10);
     const topSells = sells.slice(0, 10);
 
     const buyOrders = topBuys.map(({price, quantity, type}) => (
       <div className="buy-order order">
-        <div className="quantity">{quantity.toFixed(2)}</div>
+        <div className="quantity">
+          {quantity.toFixed(2)}
+        </div>
         <div className="price">${price.toFixed(2)}</div>
       </div>
     ));
@@ -433,6 +502,13 @@ class App extends React.Component {
       <div className="sell-order order">
         <div className="quantity">{quantity.toFixed(2)}</div>
         <div className="price">${price.toFixed(2)}</div>
+      </div>
+    ));
+
+    const recents = recentOrders.map(({price, quantity, type}) => (
+      <div className="row">
+        <div className="quantity">{quantity.toFixed(2)}</div>
+        <div className="price" style={{ color: type === "BUY" ? green : red }}>${price.toFixed(2)}</div>
       </div>
     ));
 
@@ -445,7 +521,7 @@ class App extends React.Component {
           </div>
         </Header>
         <Dashboard>
-          <div id="trading-view">
+          <div id="trading-view" class="col1">
             <TradingViewWidget
               symbol="NASDAQ:AAPL"
               theme={Themes.DARK}
@@ -454,7 +530,44 @@ class App extends React.Component {
               autosize
             />    
           </div>
-          <div id="right-panel">
+          <div class="col2">
+            <OrderBook>
+              <div className="header">
+                <div>Size</div>
+                <div>Price (USD)</div>
+              </div>
+              <div id="sells">
+                {sellOrders}
+              </div>
+              <div id="spread" style={{ background: percentMove > 0 ? "rgb(65, 199, 122, 0.06)" : "rgba(242, 59, 105, 0.06)" }}>
+                <div id="percent-move" style={{ color: percentMove > 0 ? green : red }}>
+                  {(percentMove * 100).toFixed(2)}%
+                </div>
+                <div id="market-price" style={{ color: percentMove > 0 ? green : red }}>
+                  ${marketPrice.toFixed(2)}
+                  {percentMove > 0 ? (
+                    <i id="arrow" class="fas fa-arrow-up" />
+                  ) : (
+                    <i id="arrow" class="fas fa-arrow-down" />
+                  )}
+                </div>
+              </div>
+              <div id="buys">
+                {buyOrders}
+              </div>
+            </OrderBook>
+            <Recents>
+              <div className="row header">
+                <div>Price (USD)</div>
+                <div>Size</div>
+                <div>Time</div>
+              </div>
+              <div id="orders">
+                {recents}
+              </div>
+            </Recents>
+          </div>
+          <div class="col3">
             <Instrument>
               <div id="ticker-info">
                 <div id="headshot">
@@ -498,32 +611,12 @@ class App extends React.Component {
                   <div class="value">{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, notation: "compact" }).format(instrument.totalShares * marketPrice)}</div>
                 </div>
               </Stats>
+              <Bio>
+                <div class="content">
+                  Apple, Inc engages in the design, manufacture, and sale of smartphones, personal computers, tablets, wearables and accessories, and other variety of related services. It operates through the following geographical segments: Americas, Europe, Greater China, Japan, and Rest of Asia Pacific. The Americas segment includes North and South America. The Europe segment consists of European countries, as well as India, the Middle East, and Africa. The Greater China segment comprises of China, Hong Kong, and Taiwan. The Rest of Asia Pacific segment includes Australia and Asian countries. Its products and services include iPhone, Mac, iPad, AirPods, Apple TV, Apple Watch, Beats products, Apple Care, iCloud, digital content stores, streaming, and licensing services. The company was founded by Steven Paul Jobs, Ronald Gerald Wayne, and Stephen G. Wozniak in 1977 and is headquartered in Cupertino, CA.
+                </div>
+              </Bio>
             </Instrument>
-            <OrderBook>
-              <div className="header">
-                <div>Size</div>
-                <div>Price (USD)</div>
-              </div>
-              <div id="sells">
-                {sellOrders}
-              </div>
-              <div id="spread" style={{ background: percentMove > 0 ? "rgb(65, 199, 122, 0.06)" : "rgba(242, 59, 105, 0.06)" }}>
-                <div id="percent-move" style={{ color: percentMove > 0 ? green : red }}>
-                  {(percentMove * 100).toFixed(2)}%
-                </div>
-                <div id="market-price" style={{ color: percentMove > 0 ? green : red }}>
-                  ${marketPrice.toFixed(2)}
-                  {percentMove > 0 ? (
-                    <i id="arrow" class="fas fa-arrow-up" />
-                  ) : (
-                    <i id="arrow" class="fas fa-arrow-down" />
-                  )}
-                </div>
-              </div>
-              <div id="buys">
-                {buyOrders}
-              </div>
-            </OrderBook>
             <Stats>
                 <div class="stat">
                   <div class="name">GP</div>
@@ -546,12 +639,15 @@ class App extends React.Component {
           <News>
             {newsData && newsData.items.map(i => (
               <div class="news-item">
-                <div class="header">
+                <div class="info">
                   <div class="title">{i.title}</div>
                   <div class="date">{new Date(i.pubDate).toDateString()}</div>
+                  <div class="content">{i.content}</div>
                 </div>
-                <div class="content">{i.content}</div>
-                <a class="link" href={i.link}>Learn More</a>
+                <div class="row">
+                  <a class="link" href={i.link}>Learn More</a>
+                  <div class="source" ><img src="./espn.png" alt="espn" /></div>
+                </div>
               </div>
             ))}
           </News>
