@@ -4,24 +4,23 @@ import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 
 const green = "rgb(65, 199, 122)";
 const red = "rgb(242, 59, 105)";
-// const border = "5px solid rgba(0, 0, 0, .3)";
-const border = "";
-const gray = "rgba(0,0,0,0.3)";
+const border = "1px solid rgb(64,73,78)";
+// const darkBlue = "hsla(0,0%,100%,.08)";
 const darkBlue = "rgb(26, 32, 41)";
-const teal = "rgba(38,198,218, 1)";
 const lightGray = "rgba(255,255,255,0.6)";
 const white = "hsla(0,0%,100%,.85)";
+const headerColor = "hsla(0,0%,100%,.08)";
 
 const Header = styled.div`
-  height: 60px;
-  background: ${darkBlue};
+  width: 96%;
+  height: 40px;
+  position: sticky;
+  // background: ${darkBlue};
   color: ${white};
   padding: 10px 2%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid ${gray};
-
+  justify-content: left;
 
   #left {
     display: flex;
@@ -29,85 +28,109 @@ const Header = styled.div`
     justify-content: space-between;
   }
 
-  #title {
-    font-size: 30px;
-    img {
-      margin-right: 12px;
-      height: 50px;
-    }
+  #logo {
+    height: 30px;
   }
+`;
 
-  #login {
-    border: 1px solid ${teal};
-    background: rgba(38,198,218, .1);
-    padding: 6px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    &:hover {
-      transition: .1s all;
-      background: rgba(38,198,218, .2);
-    }
+const Search = styled.div`
+  border: 1px solid ${lightGray};
+  border-radius: 4px;
+  margin-left: 40px;
+  padding: 4px 8px 4px 8px;
+  display: flex;
+  align-items: center;
+  width: 20vw;
+  min-width: 180px;
+
+  svg {
+    height: 100%;
+    fill: ${lightGray};
   }
-
-  .input {
-    margin: 0px 20px;
-    display: flex;
-    align-items: center;
-    div {
-      display: inline-block;
-      color: black;
-      background-color: ${lightGray};
-      border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
-      padding: 6px 10px;
-      width: 30px;
-      text-align: right;
-    }
-    input {
-      padding: 7px 10px;
-      width: 30px;
-      background: rgba(255,255,255,0.1);
-      color: ${white};
-      border: 1px solid ${lightGray};
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
-    }
+  input {
+    width: 100%;
+    color: ${lightGray};
+    padding-left: 5px;
+    background: none;
+    border: none;
+    outline: none;
   }
 `;
 
 const Dashboard = styled.div`
   display: flex;
-  justify-content: space-evenly;
   flex-wrap: wrap-reverse;
 
-  .col1 {
-    flex-grow: 10;
+  #dashboard {
+    justify-content: center;
+    flex-grow: 1;
+
+    .flex-row {
+      display: flex;
+      justify-content: space-evenly;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+  }
+
+  #side-nav {
+    width: 350px;
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: 1024px) {
+      width: 100%;
+      position: relative;
+    }
+
+    #sticky-side {
+      position: fixed;
+      width: 350px;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      @media (max-width: 1024px) {
+        width: 100%;
+        position: relative;
+      }
+    }
+  }
+`;
+
+const TradingInfo = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+  #graph {
+    flex-grow: 4;
+    margin: 5px;
+    min-width: 50%;
+    min-height: 500px;
   }
 
   .col2 {
-    width: 100%;
-    max-width: 400px;
-  }
-
-  .col3 {
-    min-width: 350px;
+    min-width: 300px;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
   }
 `;
 
 const Instrument = styled.div`
   border: ${border};
   background: ${darkBlue};
-
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 5px;
+  max-width: calc(100% - 10px);
 
   #ticker-info {
     display: flex;
 
     #headshot { 
       display: inline-block;
-      width: 180px;
+      width: 150px;
 
       img {
         height: 100%;
@@ -117,14 +140,14 @@ const Instrument = styled.div`
     }
     #info {
       color: ${white};
-      font-size: 20px;
+      flex-grow: 10;
 
       #top-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-bottom: 15px;
-        background: hsla(0,0%,100%,.08);
+        background: ${headerColor};
         padding: 10px;
 
         #ticker { 
@@ -157,6 +180,12 @@ const Instrument = styled.div`
           width: 150px;
           justify-content: center;
 
+          &:hover {
+            cursor: pointer;
+            background: ${headerColor};
+            transition: .1s all;
+          }
+
           svg {
             height: 20px;
             width: 20px;
@@ -170,17 +199,76 @@ const Instrument = styled.div`
 `;
 
 const Bio = styled.div`
-  padding: 20px;
+  padding: 10px 15px;
   color: ${lightGray};
   overflow: scroll;
   display: flex;
   justify-content: center;
   
   .content {
-    width: 450px;
     line-height: 1.6;
+    font-size: 14px;
+  }
+`;
+
+const Trade = styled.div`
+  color: ${white};
+  border-radius: 10px;
+  overflow: hidden;
+  background: ${darkBlue};
+  margin: 5px;
+  border: 1px solid rgb(64,73,78);
+  
+  .title {
+    padding: 10px 25px;
+    background: ${headerColor};
+    width: 100%:
   }
   
+  .line-item {
+    display: flex;
+    margin: 10px 25px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  input {
+    border: ${border};
+    border-radius: 4px;    
+    color: ${white};
+    padding: 6px;
+    text-align: right;
+    background: none;
+    outline: none;
+    width: 82px;
+  }
+
+  #total {
+    margin-top 20px;
+    padding-top: 10px;
+    border-top: ${border};
+  }
+
+  .execute {
+    background: hsla(0,0%,100%,.2);
+    padding: 6px;
+    border: 1px solid white;
+    border-radius: 9999px;
+    text-align: center;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    width: 175px;
+
+    &:hover {
+      cursor: pointer;
+      background: ${headerColor};
+      transition: .1s all;
+    }
+  }
+
 `;
 
 const Stats = styled.div`
@@ -189,8 +277,9 @@ const Stats = styled.div`
   justify-content: space-between;
   color: ${white};
   text-align: right;
-  padding: 16px 0px 16px 0px;
-  background: hsla(0,0%,100%,.08);
+  padding: 12px 0px 12px 0px;
+  background: ${headerColor};
+  font-size: 14px;
 
   .stat:nth-child(2),.stat:nth-child(3),.stat:nth-child(4)  {
     border-left: 1px solid rgb(67, 74, 89);
@@ -214,7 +303,7 @@ const OrderBook = styled.div`
   background: ${darkBlue};
   border: ${border};
   padding: 20px;
-  margin: 0px 10px 10px 10px;
+  margin: 5px;
 
   .title {
     text-align: center;
@@ -230,13 +319,11 @@ const OrderBook = styled.div`
   }
 
   #spread {
-
     display: flex;
     justify-content: space-between;
     text-align: right;
-    padding: 10px;
+    padding: 8px;
     font-family: -apple-system,BlinkMacSystemFont;
-    font-size: 16px;
 
     #arrow { 
       margin-left: 5px;
@@ -245,15 +332,12 @@ const OrderBook = styled.div`
 
   #buys {
     font-family: -apple-system,BlinkMacSystemFont;
-    font-wieght: 200;
     font-size: 14px;
   }
 
   #sells {
     font-family: -apple-system,BlinkMacSystemFont;
-    font-wieght: 200;
     font-size: 14px;
-    
     display: flex;
     flex-direction: column-reverse;
   }
@@ -261,13 +345,26 @@ const OrderBook = styled.div`
   .order {
     display: flex;
     justify-content: space-between;
-    padding: 2px;
-
+    margin: 1px;
+    padding: 1px;
+    position: relative;
+    .bar {
+      right: 0;
+      position: absolute;
+      height: 100%;
+      z-index: 0;
+    }
+    .price {
+      z-index: 1;
+    }
   }
 
   .buy-order {
     .price {
       color: ${green};
+    }
+    .bar {
+      background: rgba(2, 199, 122, 0.25);
     }
   }
 
@@ -275,17 +372,21 @@ const OrderBook = styled.div`
     .price {
       color: ${red};
     }
+    .bar {
+      background: rgba(255, 59, 105, 0.25);
+    }
   }
 `;
 
 const Recents = styled.div`
-  height: 200px;
+  height: 130px;
   overflow: scroll;
-  margin: 0px 10px;
+  margin: 5px;
   color: ${white};
   background: ${darkBlue};
   border: ${border};
   padding: 20px;
+  font-family: -apple-system,BlinkMacSystemFont;
 
   .header {
     color: ${lightGray};
@@ -296,34 +397,57 @@ const Recents = styled.div`
   }
 
   .row {
+    div {
+      flex: 1;
+      text-align: center;
+    }
     display: flex;
     justify-content: space-between;
   }
 
+  #orders {
+    font-size: 14px;
+  }
 `;
 
 const News = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  overflow: scroll;
+  flex-grow: 1;
+  max-width: 500px;
+  margin: 5px;
+
+  .news-index {
+    padding: 8px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    text-align: center;
+    background: ${headerColor};
+    border-radius: 50%;
+    &:hover {
+      transform: scale(1.04);
+    }
+  }
 
   .news-item {
-    border: 1px solid #434651;
-    width: 20%;
-    min-width: 300px;
     color: ${white};
+    border: ${border};
+    background: ${darkBlue};
+    min-width: 300px;
     padding: 20px;
-    background: hsla(0,0%,100%,.08);
     border-radius: 10px;
-    margin: 8px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+
+    &:hover {
+      cursor: pointer;
+    }
 
     .title {
       font-size: 16px;
       font-weight: 600;
+      max-width: calc(100% - 40px)
     }
     .date {
       color: ${lightGray};
@@ -351,12 +475,57 @@ const News = styled.div`
       align-items: center;
       width: 150px;
       justify-content: center;
+      &:hover {
+        cursor: pointer;
+        background: ${headerColor};
+      }
     }
+
     .source {
       img {
         max-height: 10px;
       }
     }
+  }
+`;
+
+const OrderHistory = styled.div`
+  height: 130px;
+  overflow: scroll;
+  margin: 5px;
+  color: ${white};
+  background: ${darkBlue};
+  border: ${border};
+  padding: 20px;
+  font-family: -apple-system,BlinkMacSystemFont;
+  flex-grow: 3;
+  min-width: 300px;
+
+  .header {
+    color: ${lightGray};
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px;
+    margin-bottom: 8px;
+    border-bottom: ${border};
+    ;
+  }
+
+  .row {
+    div {
+      flex: 1;
+      text-align: center;
+    }
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #orders {
+    font-size: 14px;
+    text-align: center;
+    padding-top: 10px;
+    color: ${lightGray};
+
   }
 `;
 
@@ -370,7 +539,7 @@ const instruments = [
   },
   {
     name: "Brian 'SMASH' Williams",
-    subname: "Carolina Panthers | Running Back | #22",
+    subname: "Carolina Panthers | RB | #22",
     ticker: "SMASH",
     earningPerShare: 30,
     totalShares: 1000000,
@@ -389,7 +558,7 @@ function generateMarketOrder(bias, buys, sells, minQuantity, maxQuantity) {
     marketPrice = buys[0].price;
   }
   const quantity = (Math.random() * (minQuantity + maxQuantity)) + minQuantity;
-  return { price: marketPrice, type, quantity };
+  return { price: marketPrice, type, quantity, timestamp: new Date() };
 }
 
 function generateLimitOrder(marketPrice, minQuantity, maxQuantity) {
@@ -426,6 +595,8 @@ class App extends React.Component {
       volume: 100000,
       instrument: instruments[1],
       recentOrders: [],
+      newsIndex: 0,
+      numShares: 0,
     };
     this.addOrder = this.addOrder.bind(this);
   }
@@ -485,30 +656,33 @@ class App extends React.Component {
   }
   
   render() {
-    const { buys, sells, recentOrders, marketPrice, percentMove, instrument, volume, newsData } = this.state;
-    const topBuys = buys.slice(0, 10);
-    const topSells = sells.slice(0, 10);
+    const { buys, sells, recentOrders, marketPrice, percentMove, instrument, volume, newsData, newsIndex, numShares} = this.state;
+    const topBuys = buys.slice(0, 8);
+    const topSells = sells.slice(0, 8);
 
     const buyOrders = topBuys.map(({price, quantity, type}) => (
       <div className="buy-order order">
-        <div className="quantity">
-          {quantity.toFixed(2)}
-        </div>
+        {/* backgroundImage: linear-gradient(to right, rgba(255, 59, 105, 0.25), rgba(255, 59, 105, 0.25) 54%, rgba(0, 0, 0, 0) 54%)" */}
+        <div className="quantity">{quantity.toFixed(2)}</div>
         <div className="price">${price.toFixed(2)}</div>
+        <div className="bar" style={{ width: `${((marketPrice - price) * 400 / marketPrice)}%` }}/>
       </div>
     ));
 
     const sellOrders = topSells.map(({price, quantity, type}) => (
       <div className="sell-order order">
+        {/* backgroundImage: `linear-gradient(to left, rgba(2, 199, 122, 0.25), rgba(2, 199, 122, 0.25) ${((price - marketPrice) * 100 / marketPrice)}%, rgba(0, 0, 0, 0) ${((price - marketPrice) * 100 / marketPrice)}%)` */}
         <div className="quantity">{quantity.toFixed(2)}</div>
         <div className="price">${price.toFixed(2)}</div>
+        <div className="bar" style={{ width: `${((price -  marketPrice) * 400 / marketPrice)}%` }}/>
       </div>
     ));
 
-    const recents = recentOrders.map(({price, quantity, type}) => (
+    const recents = recentOrders.map(({price, quantity, type, timestamp}) => (
       <div className="row">
-        <div className="quantity">{quantity.toFixed(2)}</div>
         <div className="price" style={{ color: type === "BUY" ? green : red }}>${price.toFixed(2)}</div>
+        <div className="quantity">{quantity.toFixed(2)}</div>
+        <div className="time">{timestamp.toLocaleTimeString(navigator.language, {hour: 'numeric', minute:'numeric', second:'numeric'})}</div>
       </div>
     ));
 
@@ -517,66 +691,37 @@ class App extends React.Component {
       <>
         <Header>
           <div id="left">
-            <div id="title"><img src="./logo_titled_white.png" alt="NEXUS" /></div>
+            <img id="logo" src="./logo_titled_white.png" alt="NEXUS" />
+            <Search id="search">
+              <svg fill="none" height="24" role="img" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M15.3201 16.7344C14.0741 17.5354 12.5913 18 11 18C6.58172 18 3 14.4183 3 10C3 5.58172 6.58172 2 11 2C15.4183 2 19 5.58172 19 10C19 12.1038 18.1879 14.0179 16.8601 15.446L21.7071 20.293L20.2928 21.7072L15.3201 16.7344ZM17 10C17 13.3137 14.3137 16 11 16C7.68629 16 5 13.3137 5 10C5 6.68629 7.68629 4 11 4C14.3137 4 17 6.68629 17 10Z" fill="var(--rh__text-color)" fill-rule="evenodd"></path></svg>
+              <input placeholder="Search"></input>
+            </Search>
           </div>
         </Header>
         <Dashboard>
-          <div id="trading-view" class="col1">
-            <TradingViewWidget
-              symbol="NASDAQ:AAPL"
-              theme={Themes.DARK}
-              allow_symbol_change={false}
-              hide_legend={true}
-              autosize
-            />    
-          </div>
-          <div class="col2">
-            <OrderBook>
-              <div className="header">
-                <div>Size</div>
-                <div>Price (USD)</div>
+          <div id="dashboard">
+            <TradingInfo>
+              <div id="graph" class="col1">
+                <TradingViewWidget
+                  symbol="NASDAQ:AAPL"
+                  theme={Themes.DARK}
+                  allow_symbol_change={false}
+                  hide_legend={true}
+                  autosize
+                /> 
               </div>
-              <div id="sells">
-                {sellOrders}
-              </div>
-              <div id="spread" style={{ background: percentMove > 0 ? "rgb(65, 199, 122, 0.06)" : "rgba(242, 59, 105, 0.06)" }}>
-                <div id="percent-move" style={{ color: percentMove > 0 ? green : red }}>
-                  {(percentMove * 100).toFixed(2)}%
-                </div>
-                <div id="market-price" style={{ color: percentMove > 0 ? green : red }}>
-                  ${marketPrice.toFixed(2)}
-                  {percentMove > 0 ? (
-                    <i id="arrow" class="fas fa-arrow-up" />
-                  ) : (
-                    <i id="arrow" class="fas fa-arrow-down" />
-                  )}
-                </div>
-              </div>
-              <div id="buys">
-                {buyOrders}
-              </div>
-            </OrderBook>
-            <Recents>
-              <div className="row header">
-                <div>Price (USD)</div>
-                <div>Size</div>
-                <div>Time</div>
-              </div>
-              <div id="orders">
-                {recents}
-              </div>
-            </Recents>
-          </div>
-          <div class="col3">
-            <Instrument>
-              <div id="ticker-info">
-                <div id="headshot">
-                  <img src={instrument.img} alt="headshot"/>
-                </div>
-                <div id="info">
-                  <div id="top-row">
-                    <div id="ticker">
-                      ${instrument.ticker}
+              <div class="col2">
+                <OrderBook>
+                  <div className="header">
+                    <div>Size</div>
+                    <div>Price (USD)</div>
+                  </div>
+                  <div id="sells">
+                    {sellOrders}
+                  </div>
+                  <div id="spread" style={{ background: percentMove > 0 ? "rgb(65, 199, 122, 0.06)" : "rgba(242, 59, 105, 0.06)" }}>
+                    <div id="percent-move" style={{ color: percentMove > 0 ? green : red }}>
+                      {(percentMove * 100).toFixed(2)}%
                     </div>
                     <div id="market-price" style={{ color: percentMove > 0 ? green : red }}>
                       ${marketPrice.toFixed(2)}
@@ -587,70 +732,128 @@ class App extends React.Component {
                       )}
                     </div>
                   </div>
-                  <div id="details">
-                    <div id="name">{instrument.name}</div>
-                    <div id="subname">{instrument.subname}</div>
-                    <div id="favorite">
-                        <svg class="Icon_icon__2NnUo inline-block mr-1 h-3 w-3 align-baseline PlayerSummary_favoritedDisabled__3-f5T" role="img" aria-label="Favorite Player Button Star" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8"><path fill="currentColor" fill-rule="evenodd" d="M4 6L1.649 7.236l.449-2.618L.196 2.764l2.628-.382L4 0l1.176 2.382 2.628.382-1.902 1.854.45 2.618z"></path></svg>
-                        <span>FAVORITE</span>
+                  <div id="buys">
+                    {buyOrders}
+                  </div>
+                </OrderBook>
+                <Recents>
+                  <div className="row header">
+                    <div>Price (USD)</div>
+                    <div>Size</div>
+                    <div>Time</div>
+                  </div>
+                  <div id="orders">
+                    {recents}
+                  </div>
+                </Recents>
+              </div>
+            </TradingInfo>
+            <div class="flex-row">
+              <News>
+                {newsData && newsData.items.map((item, i) => (
+                  <div
+                    class="news-item"
+                    style={{ display: newsIndex !== i ? 'none' : 'block' }}
+                    onClick={() => { this.setState({ newsIndex: newsIndex + 1 < newsData.items.length ? newsIndex + 1 : 0})}}
+                  >
+                    <div class="news-index"><sup>{newsIndex + 1}</sup>&frasl;<sub>{newsData.items.length}</sub></div>
+                    <div class="info">
+                      <div class="title">{item.title}</div>
+                      <div class="date">{new Date(item.pubDate).toDateString()}</div>
+                      {item.content !== "null" && <div class="content">{item.content}</div>}
+                    </div>
+                    <div class="row">
+                      <a class="link" href={item.link}>Learn More</a>
+                      <div class="source" ><img src="./espn.png" alt="espn" /></div>
+                    </div>
+                  </div>
+                ))}
+              </News>  
+              <OrderHistory>
+                <div className="row header">
+                  <div>Type</div>
+                  <div>Price (USD)</div>
+                  <div>Size</div>
+                  <div>Time</div>
+                </div>
+                <div id="orders">
+                  No pending orders
+                </div>
+              </OrderHistory>
+            </div>
+          </div>
+          <div id="side-nav">
+            <div id="sticky-side">
+              <Instrument>
+                <div id="ticker-info">
+                  <div id="headshot">
+                    <img src={instrument.img} alt="headshot"/>
+                  </div>
+                  <div id="info">
+                    <div id="top-row">
+                      <div id="ticker">
+                        ${instrument.ticker}
+                      </div>
+                      <div id="market-price" style={{ color: percentMove > 0 ? green : red }}>
+                        ${marketPrice.toFixed(2)}
+                        {percentMove > 0 ? (
+                          <i id="arrow" class="fas fa-arrow-up" />
+                        ) : (
+                          <i id="arrow" class="fas fa-arrow-down" />
+                        )}
+                      </div>
+                    </div>
+                    <div id="details">
+                      <div id="name">{instrument.name}</div>
+                      <div id="subname">{instrument.subname}</div>
+                      <div id="favorite">
+                          <svg class="Icon_icon__2NnUo inline-block mr-1 h-3 w-3 align-baseline PlayerSummary_favoritedDisabled__3-f5T" role="img" aria-label="Favorite Player Button Star" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8"><path fill="currentColor" fill-rule="evenodd" d="M4 6L1.649 7.236l.449-2.618L.196 2.764l2.628-.382L4 0l1.176 2.382 2.628.382-1.902 1.854.45 2.618z"></path></svg>
+                          <span>FAVORITE</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <Stats>
-                <div class="stat">
-                  <div class="name">Vol</div>
-                  <div class="value">{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 5, notation: "compact" }).format(volume)}</div>
+                <Stats>
+                  <div class="stat">
+                    <div class="name">Vol</div>
+                    <div class="value">{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 5, notation: "compact" }).format(volume)}</div>
+                  </div>
+                  <div class="stat">
+                    <div class="name">P/E</div>
+                    <div class="value">{(marketPrice / instrument.earningPerShare).toFixed(2)}</div>
+                  </div>
+                  <div class="stat">
+                    <div class="name">Mkt Cap</div>
+                    <div class="value">{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, notation: "compact" }).format(instrument.totalShares * marketPrice)}</div>
+                  </div>
+                </Stats>
+                <Bio>
+                  <div class="content">
+                      <div>Brian "Smash" Williams is a fictional character in the NBC/DirecTV(The 101 Network) drama television series Friday Night Lights portrayed by actor Gaius Charles. He is the starting running back of the Dillon High School Panthers. Considered the most talented player on the roster after quarterback Jason Street, Smash received his nickname from his father after hitting a water heater. Smash is believed to be based on Boobie Miles from the Friday Night Lights book and film.</div>
+                      {/* <p>Williams is shown to be a jock in the beginning of the show. He starts a feud with fullback Tim Riggins, after having sex with Riggins' girlfriend Tyra Collette. After being caught taking performance-enhancing drugs, Smash begins a more mature approach to life, taking QB Matt Saracen under his wing, building a friendship with Riggins and leading the team after the devastating injury to Jason Street</p> */}
+                  </div>
+                </Bio>
+              </Instrument>
+              <Trade>
+                <div class="title">Buy {instrument.ticker}</div>
+                <div class="line-item">
+                  <div class="key">Shares</div>
+                  <div class="value"><input placeholder="Shares" onChange={(e) => this.setState({numShares: e.target.value})}/></div>
                 </div>
-                <div class="stat">
-                  <div class="name">P/E</div>
-                  <div class="value">{(marketPrice / instrument.earningPerShare).toFixed(2)}</div>
+                <div class="line-item">
+                  <div class="key">Price</div>
+                  <div class="value">${marketPrice.toFixed(2)}</div>
                 </div>
-                <div class="stat">
-                  <div class="name">Mkt Cap</div>
-                  <div class="value">{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, notation: "compact" }).format(instrument.totalShares * marketPrice)}</div>
+                <div class="line-item" id="total">
+                  <div class="key">Total</div>
+                  <div class="value">${(marketPrice * numShares).toFixed(2)}</div>
                 </div>
-              </Stats>
-              <Bio>
-                <div class="content">
-                  Apple, Inc engages in the design, manufacture, and sale of smartphones, personal computers, tablets, wearables and accessories, and other variety of related services. It operates through the following geographical segments: Americas, Europe, Greater China, Japan, and Rest of Asia Pacific. The Americas segment includes North and South America. The Europe segment consists of European countries, as well as India, the Middle East, and Africa. The Greater China segment comprises of China, Hong Kong, and Taiwan. The Rest of Asia Pacific segment includes Australia and Asian countries. Its products and services include iPhone, Mac, iPad, AirPods, Apple TV, Apple Watch, Beats products, Apple Care, iCloud, digital content stores, streaming, and licensing services. The company was founded by Steven Paul Jobs, Ronald Gerald Wayne, and Stephen G. Wozniak in 1977 and is headquartered in Cupertino, CA.
-                </div>
-              </Bio>
-            </Instrument>
-            <Stats>
-                <div class="stat">
-                  <div class="name">GP</div>
-                  <div class="value">9</div>
-                </div>
-                <div class="stat">
-                  <div class="name">Rushing Yards</div>
-                  <div class="value">742</div>
-                </div>
-                <div class="stat">
-                  <div class="name">Receiving Yards</div>
-                  <div class="value">313</div>
-                </div>
-                <div class="stat">
-                  <div class="name">TDs</div>
-                  <div class="value">5</div>
-                </div>
-              </Stats>
+                <span class="execute">
+                  Coming Soon
+                </span>
+              </Trade>
+            </div>
           </div>
-          <News>
-            {newsData && newsData.items.map(i => (
-              <div class="news-item">
-                <div class="info">
-                  <div class="title">{i.title}</div>
-                  <div class="date">{new Date(i.pubDate).toDateString()}</div>
-                  <div class="content">{i.content}</div>
-                </div>
-                <div class="row">
-                  <a class="link" href={i.link}>Learn More</a>
-                  <div class="source" ><img src="./espn.png" alt="espn" /></div>
-                </div>
-              </div>
-            ))}
-          </News>
         </Dashboard>
       </>
     );
