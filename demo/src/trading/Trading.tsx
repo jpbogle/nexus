@@ -1,22 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
-
-const green = "rgb(65, 199, 122)";
-const red = "rgb(242, 59, 105)";
-const border = "1px solid rgb(64,73,78)";
-// const darkBlue = "hsla(0,0%,100%,.08)";
-const darkBlue = "rgb(26, 32, 41)";
-const lightGray = "rgba(255,255,255,0.6)";
-const white = "hsla(0,0%,100%,.85)";
-const headerColor = "hsla(0,0%,100%,.08)";
+import Colors from 'common/colors';
 
 const Header = styled.div`
   width: 96%;
   height: 40px;
   position: sticky;
-  // background: ${darkBlue};
-  color: ${white};
+  // background: ${Colors.darkBlue};
+  color: ${Colors.white};
   padding: 10px 2%;
   display: flex;
   align-items: center;
@@ -34,7 +26,7 @@ const Header = styled.div`
 `;
 
 const Search = styled.div`
-  border: 1px solid ${lightGray};
+  border: 1px solid ${Colors.lightGray};
   border-radius: 4px;
   margin-left: 40px;
   padding: 4px 8px 4px 8px;
@@ -45,11 +37,11 @@ const Search = styled.div`
 
   svg {
     height: 100%;
-    fill: ${lightGray};
+    fill: ${Colors.lightGray};
   }
   input {
     width: 100%;
-    color: ${lightGray};
+    color: ${Colors.lightGray};
     padding-left: 5px;
     background: none;
     border: none;
@@ -117,9 +109,9 @@ const TradingInfo = styled.div`
   }
 `;
 
-const Instrument = styled.div`
-  border: ${border};
-  background: ${darkBlue};
+const StyledInstrument = styled.div`
+  border: ${Colors.border};
+  background: ${Colors.darkBlue};
   border-radius: 10px;
   overflow: hidden;
   margin: 5px;
@@ -139,7 +131,7 @@ const Instrument = styled.div`
       }
     }
     #info {
-      color: ${white};
+      color: ${Colors.white};
       flex-grow: 10;
 
       #top-row {
@@ -147,7 +139,7 @@ const Instrument = styled.div`
         align-items: center;
         justify-content: space-between;
         margin-bottom: 15px;
-        background: ${headerColor};
+        background: ${Colors.headerColor};
         padding: 10px;
 
         #ticker { 
@@ -167,11 +159,11 @@ const Instrument = styled.div`
         }
         #subname {
           font-size: 16px;
-          color: ${lightGray};
+          color: ${Colors.lightGray};
         }
         #favorite {
           margin: 20px 0px 20px 0px;
-          border: 1px solid white;
+          border: 1px solid ${Colors.white};
           border-radius: 9999px;
           text-align: center;
           font-size: 14px;
@@ -182,7 +174,7 @@ const Instrument = styled.div`
 
           &:hover {
             cursor: pointer;
-            background: ${headerColor};
+            background: ${Colors.headerColor};
             transition: .1s all;
           }
 
@@ -200,7 +192,7 @@ const Instrument = styled.div`
 
 const Bio = styled.div`
   padding: 10px 15px;
-  color: ${lightGray};
+  color: ${Colors.lightGray};
   overflow: scroll;
   display: flex;
   justify-content: center;
@@ -212,16 +204,16 @@ const Bio = styled.div`
 `;
 
 const Trade = styled.div`
-  color: ${white};
+  color: ${Colors.white};
   border-radius: 10px;
   overflow: hidden;
-  background: ${darkBlue};
+  background: ${Colors.darkBlue};
   margin: 5px;
   border: 1px solid rgb(64,73,78);
   
   .title {
     padding: 10px 25px;
-    background: ${headerColor};
+    background: ${Colors.headerColor};
     width: 100%:
   }
   
@@ -233,9 +225,9 @@ const Trade = styled.div`
   }
 
   input {
-    border: ${border};
+    border: ${Colors.border};
     border-radius: 4px;    
-    color: ${white};
+    color: ${Colors.white};
     padding: 6px;
     text-align: right;
     background: none;
@@ -246,13 +238,13 @@ const Trade = styled.div`
   #total {
     margin-top 20px;
     padding-top: 10px;
-    border-top: ${border};
+    border-top: ${Colors.border};
   }
 
   .execute {
-    background: hsla(0,0%,100%,.2);
+    background: ${Colors.btnDisabled};
     padding: 6px;
-    border: 1px solid white;
+    border: 1px solid ${Colors.white};
     border-radius: 9999px;
     text-align: center;
     font-size: 14px;
@@ -264,7 +256,7 @@ const Trade = styled.div`
 
     &:hover {
       cursor: pointer;
-      background: ${headerColor};
+      background: ${Colors.headerColor};
       transition: .1s all;
     }
   }
@@ -275,10 +267,10 @@ const Stats = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: ${white};
+  color: ${Colors.white};
   text-align: right;
   padding: 12px 0px 12px 0px;
-  background: ${headerColor};
+  background: ${Colors.headerColor};
   font-size: 14px;
 
   .stat:nth-child(2),.stat:nth-child(3),.stat:nth-child(4)  {
@@ -293,15 +285,15 @@ const Stats = styled.div`
       margin-bottom: 5px;
     }
     .value {
-      color: ${lightGray};
+      color: ${Colors.lightGray};
     }
   }
 `;
 
 const OrderBook = styled.div`
-  color: ${white};
-  background: ${darkBlue};
-  border: ${border};
+  color: ${Colors.white};
+  background: ${Colors.darkBlue};
+  border: ${Colors.border};
   padding: 20px;
   margin: 5px;
 
@@ -311,7 +303,7 @@ const OrderBook = styled.div`
   }
 
   .header {
-    color: ${lightGray};
+    color: ${Colors.lightGray};
     display: flex;
     justify-content: space-between;
     padding-bottom: 5px;
@@ -361,7 +353,7 @@ const OrderBook = styled.div`
 
   .buy-order {
     .price {
-      color: ${green};
+      color: ${Colors.green};
     }
     .bar {
       background: rgba(2, 199, 122, 0.25);
@@ -370,7 +362,7 @@ const OrderBook = styled.div`
 
   .sell-order {
     .price {
-      color: ${red};
+      color: ${Colors.red};
     }
     .bar {
       background: rgba(255, 59, 105, 0.25);
@@ -382,14 +374,14 @@ const Recents = styled.div`
   height: 130px;
   overflow: scroll;
   margin: 5px;
-  color: ${white};
-  background: ${darkBlue};
-  border: ${border};
+  color: ${Colors.white};
+  background: ${Colors.darkBlue};
+  border: ${Colors.border};
   padding: 20px;
   font-family: -apple-system,BlinkMacSystemFont;
 
   .header {
-    color: ${lightGray};
+    color: ${Colors.lightGray};
     display: flex;
     justify-content: space-between;
     padding-bottom: 5px;
@@ -421,7 +413,7 @@ const News = styled.div`
     right: 10px;
     top: 10px;
     text-align: center;
-    background: ${headerColor};
+    background: ${Colors.headerColor};
     border-radius: 50%;
     &:hover {
       transform: scale(1.04);
@@ -429,9 +421,9 @@ const News = styled.div`
   }
 
   .news-item {
-    color: ${white};
-    border: ${border};
-    background: ${darkBlue};
+    color: ${Colors.white};
+    border: ${Colors.border};
+    background: ${Colors.darkBlue};
     min-width: 300px;
     padding: 20px;
     border-radius: 10px;
@@ -450,7 +442,7 @@ const News = styled.div`
       max-width: calc(100% - 40px)
     }
     .date {
-      color: ${lightGray};
+      color: ${Colors.lightGray};
       margin: 10px 0px 10px 0px;
     }
 
@@ -463,11 +455,11 @@ const News = styled.div`
       align-items: baseline;
     }
     .link {
-      color: ${white};
+      color: ${Colors.white};
       text-decoration: none;
       margin-top: 10px;
       padding: 5px;
-      border: 1px solid white;
+      border: 1px solid ${Colors.white};
       border-radius: 9999px;
       text-align: center;
       font-size: 14px;
@@ -477,7 +469,7 @@ const News = styled.div`
       justify-content: center;
       &:hover {
         cursor: pointer;
-        background: ${headerColor};
+        background: ${Colors.headerColor};
       }
     }
 
@@ -493,21 +485,21 @@ const OrderHistory = styled.div`
   height: 130px;
   overflow: scroll;
   margin: 5px;
-  color: ${white};
-  background: ${darkBlue};
-  border: ${border};
+  color: ${Colors.white};
+  background: ${Colors.darkBlue};
+  border: ${Colors.border};
   padding: 20px;
   font-family: -apple-system,BlinkMacSystemFont;
   flex-grow: 3;
   min-width: 300px;
 
   .header {
-    color: ${lightGray};
+    color: ${Colors.lightGray};
     display: flex;
     justify-content: space-between;
     padding-bottom: 15px;
     margin-bottom: 8px;
-    border-bottom: ${border};
+    border-bottom: ${Colors.border};
     ;
   }
 
@@ -524,7 +516,7 @@ const OrderHistory = styled.div`
     font-size: 14px;
     text-align: center;
     padding-top: 10px;
-    color: ${lightGray};
+    color: ${Colors.lightGray};
 
   }
 `;
@@ -535,7 +527,7 @@ const instruments = [
     ticker: "WOLFF",
     earningPerShare: 30,
     totalShares: 1000000,
-    img: './headshots/mwolff.webp',
+    img: 'assets/headshots/mwolff.webp',
   },
   {
     name: "Brian 'SMASH' Williams",
@@ -543,16 +535,37 @@ const instruments = [
     ticker: "SMASH",
     earningPerShare: 30,
     totalShares: 1000000,
-    img: './headshots/smash.png',
+    img: 'assets/headshots/smash.png',
   },
 ]
 
 const newsUrl = 'https://api.rss2json.com/v1/api.json?rss_url=https://www.espn.com/espn/rss/nfl/news';
 
-function generateMarketOrder(bias, buys, sells, minQuantity, maxQuantity) {
-  const type = Math.random() > bias ? 'SELL' : 'BUY';
+type Instrument  = {
+  name: string,
+  subname?: string,
+  ticker: string,
+  earningPerShare: number,
+  totalShares: number,
+  img: string,
+}
+
+enum OrderType {
+  BUY,
+  SELL,
+}
+
+type Order = {
+  price: number,
+  type: OrderType,
+  quantity: number,
+  timestamp: Date,
+}
+
+function generateMarketOrder(bias, buys, sells, minQuantity, maxQuantity): Order {
+  const type = Math.random() > bias ? OrderType.SELL : OrderType.BUY;
   let marketPrice = 50;
-  if (type === 'BUY' && sells.length > 0) {
+  if (type ===  OrderType.BUY && sells.length > 0) {
     marketPrice = sells[0].price
   } else if (buys.length > 0) {
     marketPrice = buys[0].price;
@@ -561,15 +574,27 @@ function generateMarketOrder(bias, buys, sells, minQuantity, maxQuantity) {
   return { price: marketPrice, type, quantity, timestamp: new Date() };
 }
 
-function generateLimitOrder(marketPrice, minQuantity, maxQuantity) {
+function generateLimitOrder(marketPrice, minQuantity, maxQuantity): Order {
   const rand = Math.random() * marketPrice * 2;
-  const type = rand > marketPrice ? 'SELL' : 'BUY';
+  const type = rand > marketPrice ? OrderType.SELL : OrderType.BUY;
   const price = rand;
   const quantity = (Math.random() * (minQuantity + maxQuantity)) + minQuantity;
-  return { price, type, quantity };
+  return { price, type, quantity, timestamp: new Date() };
 }
 
-class App extends React.Component {
+class Trading extends React.Component<{}, {
+  bias: number,
+  buys: Order[],
+  sells: Order[],
+  marketPrice: number,
+  percentMove: number,
+  instrument: Instrument,
+  volume: number,
+  recentOrders: Order[],
+  newsIndex: number,
+  numShares: number,
+  newsData?: {items?: {title: string, pubDate: string, content: string, link: string}[]},
+}> {
   constructor(props) {
     super(props);
     const buys = [];
@@ -577,7 +602,7 @@ class App extends React.Component {
     const marketPrice = 150;
     for (let i = 0; i <= 1000; i++) {
       const order = generateLimitOrder(marketPrice, 40, 80);
-      if (order.type === 'BUY') {
+      if (order.type === OrderType.BUY) {
         buys.push(order)
       } else {
         sells.push(order)
@@ -620,7 +645,7 @@ class App extends React.Component {
   addOrder() {
     let { buys, sells, volume, marketPrice, bias, recentOrders } = this.state;
     const order = generateMarketOrder(bias, buys, sells, 5, 15);
-    if (order.type === 'BUY') {
+    if (order.type === OrderType.BUY) {
       buys.push(order)
       buys.sort((a, b) => (a.price < b.price ? 1 : -1));
     } else {
@@ -680,7 +705,7 @@ class App extends React.Component {
 
     const recents = recentOrders.map(({price, quantity, type, timestamp}) => (
       <div className="row">
-        <div className="price" style={{ color: type === "BUY" ? green : red }}>${price.toFixed(2)}</div>
+        <div className="price" style={{ color: type === OrderType.BUY ? Colors.green : Colors.red }}>${price.toFixed(2)}</div>
         <div className="quantity">{quantity.toFixed(2)}</div>
         <div className="time">{timestamp.toLocaleTimeString(navigator.language, {hour: 'numeric', minute:'numeric', second:'numeric'})}</div>
       </div>
@@ -691,9 +716,9 @@ class App extends React.Component {
       <>
         <Header>
           <div id="left">
-            <img id="logo" src="./logo_titled_white.png" alt="NEXUS" />
+            <img id="logo" src="assets/logo_titled_white.png" alt="NEXUS" />
             <Search id="search">
-              <svg fill="none" height="24" role="img" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M15.3201 16.7344C14.0741 17.5354 12.5913 18 11 18C6.58172 18 3 14.4183 3 10C3 5.58172 6.58172 2 11 2C15.4183 2 19 5.58172 19 10C19 12.1038 18.1879 14.0179 16.8601 15.446L21.7071 20.293L20.2928 21.7072L15.3201 16.7344ZM17 10C17 13.3137 14.3137 16 11 16C7.68629 16 5 13.3137 5 10C5 6.68629 7.68629 4 11 4C14.3137 4 17 6.68629 17 10Z" fill="var(--rh__text-color)" fill-rule="evenodd"></path></svg>
+              <svg fill="none" height="24" role="img" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M15.3201 16.7344C14.0741 17.5354 12.5913 18 11 18C6.58172 18 3 14.4183 3 10C3 5.58172 6.58172 2 11 2C15.4183 2 19 5.58172 19 10C19 12.1038 18.1879 14.0179 16.8601 15.446L21.7071 20.293L20.2928 21.7072L15.3201 16.7344ZM17 10C17 13.3137 14.3137 16 11 16C7.68629 16 5 13.3137 5 10C5 6.68629 7.68629 4 11 4C14.3137 4 17 6.68629 17 10Z" fill="var(--rh__text-color)" fillRule="evenodd"></path></svg>
               <input placeholder="Search"></input>
             </Search>
           </div>
@@ -701,7 +726,7 @@ class App extends React.Component {
         <Dashboard>
           <div id="dashboard">
             <TradingInfo>
-              <div id="graph" class="col1">
+              <div id="graph" className="col1">
                 <TradingViewWidget
                   symbol="NASDAQ:AAPL"
                   theme={Themes.DARK}
@@ -710,7 +735,7 @@ class App extends React.Component {
                   autosize
                 /> 
               </div>
-              <div class="col2">
+              <div className="col2">
                 <OrderBook>
                   <div className="header">
                     <div>Size</div>
@@ -720,15 +745,15 @@ class App extends React.Component {
                     {sellOrders}
                   </div>
                   <div id="spread" style={{ background: percentMove > 0 ? "rgb(65, 199, 122, 0.06)" : "rgba(242, 59, 105, 0.06)" }}>
-                    <div id="percent-move" style={{ color: percentMove > 0 ? green : red }}>
+                    <div id="percent-move" style={{ color: percentMove > 0 ? Colors.green : Colors.red }}>
                       {(percentMove * 100).toFixed(2)}%
                     </div>
-                    <div id="market-price" style={{ color: percentMove > 0 ? green : red }}>
+                    <div id="market-price" style={{ color: percentMove > 0 ? Colors.green : Colors.red }}>
                       ${marketPrice.toFixed(2)}
                       {percentMove > 0 ? (
-                        <i id="arrow" class="fas fa-arrow-up" />
+                        <i id="arrow" className="fas fa-arrow-up" />
                       ) : (
-                        <i id="arrow" class="fas fa-arrow-down" />
+                        <i id="arrow" className="fas fa-arrow-down" />
                       )}
                     </div>
                   </div>
@@ -748,23 +773,23 @@ class App extends React.Component {
                 </Recents>
               </div>
             </TradingInfo>
-            <div class="flex-row">
+            <div className="flex-row">
               <News>
                 {newsData && newsData.items.map((item, i) => (
                   <div
-                    class="news-item"
+                    className="news-item"
                     style={{ display: newsIndex !== i ? 'none' : 'block' }}
                     onClick={() => { this.setState({ newsIndex: newsIndex + 1 < newsData.items.length ? newsIndex + 1 : 0})}}
                   >
-                    <div class="news-index"><sup>{newsIndex + 1}</sup>&frasl;<sub>{newsData.items.length}</sub></div>
-                    <div class="info">
-                      <div class="title">{item.title}</div>
-                      <div class="date">{new Date(item.pubDate).toDateString()}</div>
-                      {item.content !== "null" && <div class="content">{item.content}</div>}
+                    <div className="news-index"><sup>{newsIndex + 1}</sup>&frasl;<sub>{newsData.items.length}</sub></div>
+                    <div className="info">
+                      <div className="title">{item.title}</div>
+                      <div className="date">{new Date(item.pubDate).toDateString()}</div>
+                      {item.content !== "null" && <div className="content">{item.content}</div>}
                     </div>
-                    <div class="row">
-                      <a class="link" href={item.link}>Learn More</a>
-                      <div class="source" ><img src="./espn.png" alt="espn" /></div>
+                    <div className="row">
+                      <a className="link" href={item.link}>Learn More</a>
+                      <div className="source" ><img src="assets/espn.png" alt="espn" /></div>
                     </div>
                   </div>
                 ))}
@@ -784,7 +809,7 @@ class App extends React.Component {
           </div>
           <div id="side-nav">
             <div id="sticky-side">
-              <Instrument>
+              <StyledInstrument>
                 <div id="ticker-info">
                   <div id="headshot">
                     <img src={instrument.img} alt="headshot"/>
@@ -794,12 +819,12 @@ class App extends React.Component {
                       <div id="ticker">
                         ${instrument.ticker}
                       </div>
-                      <div id="market-price" style={{ color: percentMove > 0 ? green : red }}>
+                      <div id="market-price" style={{ color: percentMove > 0 ? Colors.green : Colors.red }}>
                         ${marketPrice.toFixed(2)}
                         {percentMove > 0 ? (
-                          <i id="arrow" class="fas fa-arrow-up" />
+                          <i id="arrow" className="fas fa-arrow-up" />
                         ) : (
-                          <i id="arrow" class="fas fa-arrow-down" />
+                          <i id="arrow" className="fas fa-arrow-down" />
                         )}
                       </div>
                     </div>
@@ -807,48 +832,48 @@ class App extends React.Component {
                       <div id="name">{instrument.name}</div>
                       <div id="subname">{instrument.subname}</div>
                       <div id="favorite">
-                          <svg class="Icon_icon__2NnUo inline-block mr-1 h-3 w-3 align-baseline PlayerSummary_favoritedDisabled__3-f5T" role="img" aria-label="Favorite Player Button Star" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8"><path fill="currentColor" fill-rule="evenodd" d="M4 6L1.649 7.236l.449-2.618L.196 2.764l2.628-.382L4 0l1.176 2.382 2.628.382-1.902 1.854.45 2.618z"></path></svg>
+                          <svg className="Icon_icon__2NnUo inline-block mr-1 h-3 w-3 align-baseline PlayerSummary_favoritedDisabled__3-f5T" role="img" aria-label="Favorite Player Button Star" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8"><path fill="currentColor" fillRule="evenodd" d="M4 6L1.649 7.236l.449-2.618L.196 2.764l2.628-.382L4 0l1.176 2.382 2.628.382-1.902 1.854.45 2.618z"></path></svg>
                           <span>FAVORITE</span>
                       </div>
                     </div>
                   </div>
                 </div>
                 <Stats>
-                  <div class="stat">
-                    <div class="name">Vol</div>
-                    <div class="value">{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 5, notation: "compact" }).format(volume)}</div>
+                  <div className="stat">
+                    <div className="name">Vol</div>
+                    <div className="value">{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 5, notation: "compact" }).format(volume)}</div>
                   </div>
-                  <div class="stat">
-                    <div class="name">P/E</div>
-                    <div class="value">{(marketPrice / instrument.earningPerShare).toFixed(2)}</div>
+                  <div className="stat">
+                    <div className="name">P/E</div>
+                    <div className="value">{(marketPrice / instrument.earningPerShare).toFixed(2)}</div>
                   </div>
-                  <div class="stat">
-                    <div class="name">Mkt Cap</div>
-                    <div class="value">{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, notation: "compact" }).format(instrument.totalShares * marketPrice)}</div>
+                  <div className="stat">
+                    <div className="name">Mkt Cap</div>
+                    <div className="value">{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, notation: "compact" }).format(instrument.totalShares * marketPrice)}</div>
                   </div>
                 </Stats>
                 <Bio>
-                  <div class="content">
+                  <div className="content">
                       <div>Brian "Smash" Williams is a fictional character in the NBC/DirecTV(The 101 Network) drama television series Friday Night Lights portrayed by actor Gaius Charles. He is the starting running back of the Dillon High School Panthers. Considered the most talented player on the roster after quarterback Jason Street, Smash received his nickname from his father after hitting a water heater. Smash is believed to be based on Boobie Miles from the Friday Night Lights book and film.</div>
                       {/* <p>Williams is shown to be a jock in the beginning of the show. He starts a feud with fullback Tim Riggins, after having sex with Riggins' girlfriend Tyra Collette. After being caught taking performance-enhancing drugs, Smash begins a more mature approach to life, taking QB Matt Saracen under his wing, building a friendship with Riggins and leading the team after the devastating injury to Jason Street</p> */}
                   </div>
                 </Bio>
-              </Instrument>
+              </StyledInstrument>
               <Trade>
-                <div class="title">Buy {instrument.ticker}</div>
-                <div class="line-item">
-                  <div class="key">Shares</div>
-                  <div class="value"><input placeholder="Shares" onChange={(e) => this.setState({numShares: e.target.value})}/></div>
+                <div className="title">Buy {instrument.ticker}</div>
+                <div className="line-item">
+                  <div className="key">Shares</div>
+                  <div className="value"><input placeholder="Shares" type="number" onChange={(e) => this.setState({ numShares: parseInt(e.target.value) })}/></div>
                 </div>
-                <div class="line-item">
-                  <div class="key">Price</div>
-                  <div class="value">${marketPrice.toFixed(2)}</div>
+                <div className="line-item">
+                  <div className="key">Price</div>
+                  <div className="value">${marketPrice.toFixed(2)}</div>
                 </div>
-                <div class="line-item" id="total">
-                  <div class="key">Total</div>
-                  <div class="value">${(marketPrice * numShares).toFixed(2)}</div>
+                <div className="line-item" id="total">
+                  <div className="key">Total</div>
+                  <div className="value">${(marketPrice * numShares).toFixed(2)}</div>
                 </div>
-                <span class="execute">
+                <span className="execute">
                   Coming Soon
                 </span>
               </Trade>
@@ -860,4 +885,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Trading;
