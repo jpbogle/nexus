@@ -117,19 +117,20 @@ export function useOrderbookData() {
   const [percentChange, setPercentChange] = useState(0);
   const [{bids, asks}, setBidAsks] = useState({bids: [], asks: []});
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (market && connection) {
-        getOrderbook(connection, market).then((bidAsks) => {
-          const { bids, asks } = bidAsks;
-          const bb = bids?.length > 0 && bids[0][0];
-          const ba = asks?.length > 0 && asks[0][0];
-          const price = (bb + ba) / 2;
-          setPercentChange((marketPrice - price) / price);
-          setMarketPrice(price);
-          setBidAsks(bidAsks);
-        });
-      }
-    }, 1000);
+    const interval = setInterval(
+      function orderbookInterval(): any {
+        if (market && connection) {
+          getOrderbook(connection, market).then((bidAsks) => {
+            const { bids, asks } = bidAsks;
+            const bb = bids?.length > 0 && bids[0][0];
+            const ba = asks?.length > 0 && asks[0][0];
+            const price = (bb + ba) / 2;
+            setPercentChange((marketPrice - price) / price);
+            setMarketPrice(price);
+            setBidAsks(bidAsks);
+          });
+        }
+      }(), 1000);
     return () => clearInterval(interval);
   }, [connection, market, marketPrice, percentChange]);
   return {bids, asks, marketPrice, percentChange};
