@@ -1,3 +1,4 @@
+import { PublicKey } from '@solana/web3.js';
 import path from 'path';
 import {
   connect,
@@ -7,6 +8,13 @@ import {
   getSeededAccount,
   getString,
 } from './solanastring';
+
+import {
+  getPayer,
+  getRpcUrl,
+  newAccountWithLamports,
+  createKeypairFromFile,
+} from './utils';
 
 /**
  * Path to the keypair of the deployed program.
@@ -19,9 +27,13 @@ const DATA = "DATA";
 const ACCOUNT_SEED = "SEED";
 
 async function main() {
-  console.log("Let's say add data to a Solana account...");
+  // console.log("Let's say add data to a Solana account...");
 
   const connection = await connect();
+  newAccountWithLamports(connection, 1000);
+
+  const lamports = await connection.getBalance(new PublicKey('22222222222222222222222222222222222222222222'));
+  console.log(lamports);
 
   const payerAccount = await getAccount(connection);
 

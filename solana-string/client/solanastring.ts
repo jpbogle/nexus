@@ -105,14 +105,16 @@ export async function getSeededAccount(connection: Connection, programId: Public
     seed,
     programId,
   );
+  console.log(`Checking for existing account with seed ${seededPubkey}`)
 
   // Check if the account from seed has already been created
   const seededAccount = await connection.getAccountInfo(seededPubkey);
+  console.log(`Using seeded account ${JSON.stringify(seededAccount)}`)
   if (seededAccount === null) {
     console.log(
       'Creating program account',
       seededPubkey.toBase58(),
-      'to say store data to with size / space',
+      'to store data to with size / space',
       PROGRAM_ACCOUNT_SIZE,
     );
     const lamports = await connection.getMinimumBalanceForRentExemption(
@@ -133,7 +135,7 @@ export async function getSeededAccount(connection: Connection, programId: Public
     await sendAndConfirmTransaction(connection, transaction, [account]);
   }
 
-  return seededPubkey;
+  return account.publicKey;
 }
 
 export async function checkProgram(connection: Connection, program_keypair_path:string): Promise<Keypair> {
@@ -162,7 +164,7 @@ export async function checkProgram(connection: Connection, program_keypair_path:
 }
 
 export async function setString(connection: Connection, account: Keypair, seededAccount: PublicKey, programId: PublicKey, str: string): Promise<TransactionSignature> {
-  console.log('Setting string', seededAccount.toBase58());
+  console.log(`Setting string '${str}' on account ${seededAccount.toBase58()}`);
   const instruction = new TransactionInstruction({
     keys: [{pubkey: seededAccount, isSigner: false, isWritable: true}],
     programId,

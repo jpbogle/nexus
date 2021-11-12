@@ -6,15 +6,16 @@ import os from 'os';
 import fs from 'mz/fs';
 import path from 'path';
 import yaml from 'yaml';
-import {Keypair, Connection} from '@solana/web3.js';
+import { Keypair, Connection, PublicKey } from '@solana/web3.js';
 
 export async function newAccountWithLamports(
   connection: Connection,
   lamports = 1000000,
 ): Promise<Keypair> {
   const keypair = Keypair.generate();
+  console.log(keypair);
   const signature = await connection.requestAirdrop(
-    keypair.publicKey,
+    new PublicKey('22222222222222222222222222222222222222222222'),
     lamports,
   );
   await connection.confirmTransaction(signature);
